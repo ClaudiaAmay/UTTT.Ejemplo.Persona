@@ -12,6 +12,11 @@ using System.Linq.Expressions;
 using System.Collections;
 using UTTT.Ejemplo.Persona.Control;
 using UTTT.Ejemplo.Persona.Control.Ctrl;
+using System.Net.Mail;
+using System.Threading;
+using System.Net;
+using System.Security.Cryptography.X509Certificates;
+using System.Net.Security;
 
 #endregion
 
@@ -79,6 +84,7 @@ namespace UTTT.Ejemplo.Persona
                         this.txtAPaterno.Text = this.baseEntity.strAPaterno;
                         this.txtAMaterno.Text = this.baseEntity.strAMaterno;
                         this.txtClaveUnica.Text = this.baseEntity.strClaveUnica;
+                        this.txtCURP.Text = this.baseEntity.strCurp;
                         this.setItem(ref this.ddlSexo, baseEntity.CatSexo.strValor);
                     }                
                 }
@@ -96,20 +102,55 @@ namespace UTTT.Ejemplo.Persona
         {
             try
             {
+                rvClaveUnica.Validate();
+                revNombre.Validate();
+                revAPaterno.Validate();
+                revAMaterno.Validate();
+                revCURP.Validate();
+                rfvNombre.Validate();
+                rfvAPaterno.Validate();
+                rfvAMaterno.Validate();
+                rfvCurp.Validate();
+
+                //if (!Page.IsValid)
+                //{
+                //    return;
+                //}
                 DataContext dcGuardar = new DcGeneralDataContext();
                 UTTT.Ejemplo.Linq.Data.Entity.Persona persona = new Linq.Data.Entity.Persona();
                 if (this.idPersona == 0)
                 {
+                  
+
                     persona.strClaveUnica = this.txtClaveUnica.Text.Trim();
                     persona.strNombre = this.txtNombre.Text.Trim();
                     persona.strAMaterno = this.txtAMaterno.Text.Trim();
                     persona.strAPaterno = this.txtAPaterno.Text.Trim();
+                    persona.strCurp = this.txtCURP.Text.Trim();
                     persona.idCatSexo = int.Parse(this.ddlSexo.Text);
+
+                    String mensaje = String.Empty;
+                    if (this.vistaBacia(persona))
+                    {
+
+                        this.regresar();
+                    }
+
+                    if (!this.validacion(persona, ref mensaje))
+                    {
+                        ////Validacion de datos correctos desde código
+                        this.lblMensaje.Text = mensaje;
+                        this.lblMensaje.Visible = true;
+                        return;
+                    }
+
+              
+
                     dcGuardar.GetTable<UTTT.Ejemplo.Linq.Data.Entity.Persona>().InsertOnSubmit(persona);
                     dcGuardar.SubmitChanges();
                     this.showMessage("El registro se agrego correctamente.");
                     this.Response.Redirect("~/PersonaPrincipal.aspx", false);
-                    
+
                 }
                 if (this.idPersona > 0)
                 {
@@ -118,6 +159,7 @@ namespace UTTT.Ejemplo.Persona
                     persona.strNombre = this.txtNombre.Text.Trim();
                     persona.strAMaterno = this.txtAMaterno.Text.Trim();
                     persona.strAPaterno = this.txtAPaterno.Text.Trim();
+                    persona.strCurp = this.txtCURP.Text.Trim();
                     persona.idCatSexo = int.Parse(this.ddlSexo.Text);
                     dcGuardar.SubmitChanges();
                     this.showMessage("El registro se edito correctamente.");
@@ -127,6 +169,8 @@ namespace UTTT.Ejemplo.Persona
             catch (Exception _e)
             {
                 this.showMessageException(_e.Message);
+                          
+
             }
         }
 
@@ -180,5 +224,121 @@ namespace UTTT.Ejemplo.Persona
         }
 
         #endregion
+
+        #region Validación Código
+        ///<summary>
+        ///Valida datos básicos
+        ///</summary>
+        ///<param name="_persona"></param>
+        ///<param name="_mensaje"></param>
+        ///<returns></returns>
+
+        public bool validacion(UTTT.Ejemplo.Linq.Data.Entity.Persona _persona, ref String _mensaje)
+        {
+            if(_persona.idCatSexo == -1)
+            {
+                _mensaje = "Seleccione Masculino o Femenino";
+                return false;
+            }
+            int i = 0;
+            //Verificar si un texto es un número
+            if(int.TryParse(_persona.strClaveUnica, out i) == false)
+            {
+                _mensaje = "La Clave Unica no es un número";
+                return false;
+            }
+            ////Validamos un número
+            ////string, saber que es un número
+            ////99 y 1000
+           if(int.Parse(_persona.strClaveUnica) < 100 || int.Parse(_persona.strClaveUnica) > 999)
+            {
+                _mensaje = "La Clave Unica esta fuera de rango";
+                return false;
+            }
+            if (_persona.strNombre.Equals(String.Empty))
+            {
+                _mensaje = "El campo Nombre está vacio";
+                return false;
+            }
+            if (_persona.strNombre.Length > 50)
+            {
+                _mensaje = "Los caracteres permitidos para nombre rebasan lo establecido de 50";
+                return false;
+            }
+
+            if (_persona.strAPaterno.Equals(String.Empty))
+            {
+                _mensaje = "El campo APaterno esta vacio";
+                return false;
+            }
+
+            if (_persona.strAPaterno.Length > 50)
+            {
+                _mensaje = "Los caracteres permitidos para nombre rebasan lo establecido de 50 para A Paterno";
+                return false;
+            }
+            if (_persona.strAMaterno.Equals(String.Empty))
+            {
+                _mensaje = "El campo AMaterno esta vacio";
+                return false;
+            }
+
+            if (_persona.strAMaterno.Length > 50)
+            {
+                _mensaje = "Los caracteres permitidos para nombre rebasan lo establecido de 50 para A Materno";
+                return false;
+            }
+            if (_persona.strCurp.Equals(String.Empty))
+            {
+                _mensaje = "El campo Curp esta vacio";
+                return false;
+            }
+
+            if (_persona.strCurp.Length > 50)
+            {
+                _mensaje = "Los caracteres permitidos para Curp rebasan lo establecido de 50";
+                return false;
+            }
+            return true;
+
+        }
+        public bool vistaBacia(UTTT.Ejemplo.Linq.Data.Entity.Persona _persona)
+        {
+
+            try
+            {
+                if (_persona.idCatSexo == -1 && _persona.strClaveUnica.Equals(string.Empty) && _persona.strNombre.Equals(string.Empty)
+                    && _persona.strAPaterno.Equals(string.Empty) && _persona.strAMaterno.Equals(string.Empty) &&
+                       _persona.strCurp.Equals(string.Empty))
+                {
+                    return true;
+                }
+                else
+                {
+
+                    return false;
+
+                }
+
+            }
+            catch (Exception e)
+            {
+               
+
+            }
+            return false;
+        }
+
+        public void regresar()
+        {
+            this.Response.Redirect("~/PersonaPrincipal.aspx", false);
+
+        }
+        #endregion
+
+        protected void txtNombre_TextChanged(object sender, EventArgs e)
+        {
+
+        }
     }
 }

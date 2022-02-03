@@ -45,6 +45,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Class1.cs" />
+    <Compile Include="Entity\CatEstadoCivil.cs" />
     <Compile Include="Entity\CatSexo.cs" />
     <Compile Include="Entity\DcGeneral.designer.cs">
       <AutoGen>True</AutoGen>

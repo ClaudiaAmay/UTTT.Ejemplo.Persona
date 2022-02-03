@@ -81,6 +81,8 @@
     <Content Include="direccion.aspx" />
     <Content Include="DireccionExtraManager.aspx" />
     <Content Include="DireccionManager.aspx" />
+    <Content Include="ErrorPage.aspx" />
+    <Content Include="Global.asax" />
     <Content Include="Images\delrecord_16x16.png" />
     <Content Include="Images\editrecord_16x16.png" />
     <Content Include="Images\Pixir-1-1-300x181.png" />
@@ -130,6 +132,16 @@
     </Compile>
     <Compile Include="DireccionManager.aspx.designer.cs">
       <DependentUpon>DireccionManager.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ErrorPage.aspx.cs">
+      <DependentUpon>ErrorPage.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ErrorPage.aspx.designer.cs">
+      <DependentUpon>ErrorPage.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Global.asax.cs">
+      <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="javaScripPage.aspx.cs">
       <DependentUpon>javaScripPage.aspx</DependentUpon>
