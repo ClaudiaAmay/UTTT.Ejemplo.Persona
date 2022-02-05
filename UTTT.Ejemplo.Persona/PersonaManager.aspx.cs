@@ -265,6 +265,11 @@ namespace UTTT.Ejemplo.Persona
                 _mensaje = "Los caracteres permitidos para nombre rebasan lo establecido de 50";
                 return false;
             }
+            if (_persona.strNombre.Length < 3)
+            {
+                _mensaje = "Ingrese un Nombre real";
+                return false;
+            }
 
             if (_persona.strAPaterno.Equals(String.Empty))
             {
@@ -275,6 +280,11 @@ namespace UTTT.Ejemplo.Persona
             if (_persona.strAPaterno.Length > 50)
             {
                 _mensaje = "Los caracteres permitidos para nombre rebasan lo establecido de 50 para A Paterno";
+                return false;
+            }
+            if (_persona.strAPaterno.Length < 3)
+            {
+                _mensaje = "Ingrese un Apellido Real";
                 return false;
             }
             if (_persona.strAMaterno.Equals(String.Empty))
@@ -288,6 +298,11 @@ namespace UTTT.Ejemplo.Persona
                 _mensaje = "Los caracteres permitidos para nombre rebasan lo establecido de 50 para A Materno";
                 return false;
             }
+            if (_persona.strAMaterno.Length < 3)
+            {
+                _mensaje = "Ingrese un Apellido Real";
+                return false;
+            }
             if (_persona.strCurp.Equals(String.Empty))
             {
                 _mensaje = "El campo Curp esta vacio";
@@ -297,6 +312,11 @@ namespace UTTT.Ejemplo.Persona
             if (_persona.strCurp.Length > 50)
             {
                 _mensaje = "Los caracteres permitidos para Curp rebasan lo establecido de 50";
+                return false;
+            }
+            if (_persona.strCurp.Length < 18)
+            {
+                _mensaje = "Los caracteres permitidos para Curp tiene que ser 18";
                 return false;
             }
             return true;
