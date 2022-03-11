@@ -72,7 +72,7 @@ namespace UTTT.Ejemplo.Persona
                     this.ddlSexo.DataBind();
 
                     this.ddlSexo.SelectedIndexChanged += new EventHandler(ddlSexo_SelectedIndexChanged);
-                    this.ddlSexo.AutoPostBack = true;
+                    this.ddlSexo.AutoPostBack = false;
                     if (this.idPersona == 0)
                     {
                         this.lblAccion.Text = "Agregar";
@@ -161,6 +161,23 @@ namespace UTTT.Ejemplo.Persona
                     persona.strAPaterno = this.txtAPaterno.Text.Trim();
                     persona.strCurp = this.txtCURP.Text.Trim();
                     persona.idCatSexo = int.Parse(this.ddlSexo.Text);
+
+                    //Lo que acabo de poner
+                    String mensaje = String.Empty;
+                    //if (this.vistaBacia(persona))
+                    //{
+
+                    //    this.regresar();
+                    //}
+
+                    if (!this.validacion(persona, ref mensaje))
+                    {
+                        ////Validacion de datos correctos desde código
+                        this.lblMensaje.Text = mensaje;
+                        this.lblMensaje.Visible = true;
+                        return;
+                    }
+
                     dcGuardar.SubmitChanges();
                     this.showMessage("El registro se edito correctamente.");
                     this.Response.Redirect("~/PersonaPrincipal.aspx", false);
