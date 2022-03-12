@@ -1,4 +1,5 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="PersonaPrincipal.aspx.cs" Inherits="UTTT.Ejemplo.Persona.PersonaPrincipal"  debug=false%>
+<%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="ajaxToolkit"%>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
@@ -21,6 +22,8 @@
     </div>
  <section class="container-fluid">
       <form id="form1" runat="server">
+          <asp:ScriptManager ID="ScriptManager1" runat="server" EnablePageMethods="true">
+            </asp:ScriptManager>
 
          <div>
                 <p>
@@ -28,9 +31,12 @@
                 <br />
                 <p>
                     Nombre:&nbsp;&nbsp;&nbsp;
+                    <ajaxToolkit:AutoCompleteExtender ID="AutoCompleteExtender1" runat="server" CompletionInterval="100" 
+            MinimumPrefixLength="2" ServiceMethod="txtNombre_TextChanged" TargetControlID="txtNombre">
+        </ajaxToolkit:AutoCompleteExtender>
 
         <asp:TextBox ID="txtNombre" runat="server"  Width="177px"
-            ViewStateMode="Disabled"></asp:TextBox>
+            ViewStateMode="Disabled" AutoPostBack="true"></asp:TextBox>
                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
         <asp:Button class="btn btn-outline-primary" ID="btnBuscar" runat="server" Text="Buscar"
             OnClick="btnBuscar_Click" ViewStateMode="Disabled" />

@@ -1,4 +1,5 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="PersonaManager.aspx.cs" Inherits="UTTT.Ejemplo.Persona.PersonaManager" Debug="false" %>
+<%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="ajaxToolkit"%>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
@@ -57,6 +58,8 @@
     </div>
     <section class="container-fluid">
                <form id="form1" runat="server">
+                   <asp:ScriptManager ID="ScriptManager1" runat="server" EnablePageMethods="true">
+            </asp:ScriptManager>
      
            <div class="row">
                 <div class="col-6">
@@ -70,6 +73,8 @@
 
                    <div class="container">
                 <div class="row">
+                    <asp:UpdatePanel ID="UpDatePanel1" runat="server">    
+                    <ContentTemplate>
                     <div class="col-2">Sexo:</div>
                     <div class="col-2">
                         <asp:DropDownList
@@ -80,6 +85,11 @@
                           <asp:RequiredFieldValidator ID="rfvSexo" runat="server" ControlToValidate="ddlSexo" ErrorMessage="*Selecciona el sexo" InitialValue="-1" ValidationGroup="vgvVali"></asp:RequiredFieldValidator>
                     </div>
                     <div class="col-8"></div>
+                        </ContentTemplate>
+                        <Triggers>
+                            <asp:AsyncPostBackTrigger ControlID="ddlSexo" EventName="SelectedIndexChanged" />
+                        </Triggers>
+                        </asp:UpdatePanel>  
 
                          <div class="col-2">Clave Unica: </div>
                     <div class="col-2">
@@ -147,7 +157,21 @@
                         <asp:RegularExpressionValidator ID="revCURP" runat="server" ControlToValidate="txtCURP" ErrorMessage="*La CURP es incorrecta" ValidationExpression="^([A-Z][AEIOUX][A-Z]{2}\d{2}(?:0[1-9]|1[0-2])(?:0[1-9]|[12]\d|3[01])[HM](?:AS|B[CS]|C[CLMSH]|D[FG]|G[TR]|HG|JC|M[CNS]|N[ETL]|OC|PL|Q[TR]|S[PLR]|T[CSL]|VZ|YN|ZS)[B-DF-HJ-NP-TV-Z]{3}[A-Z\d])(\d)$"></asp:RegularExpressionValidator>
                         <asp:RequiredFieldValidator ID="rfvCurp" runat="server" ControlToValidate="txtCURP" ErrorMessage="*Curp obligatorio"></asp:RequiredFieldValidator>
                     </div>
+
+                         <div class="col-2">Fecha de Nacimiento: </div>
+                    <div class="col-2">
+                      <asp:TextBox ID="txtFechaNacimiento" runat="server" MaxLength="18" Width="160px"
+                      onkeypress="return validaCurp(event);">
+                      </asp:TextBox>
+                         <asp:ImageButton ID="imgPopup" ImageUrl="Images/calendar.png" ImageAlign="Bottom"
+                        runat="server" CausesValidation="False" Width="25px" />
+                    <ajaxToolkit:CalendarExtender ID="CalendarExtender1" PopupButtonID="imgPopup" Format="dd/MM/yyyy"
+                        runat="server" TargetControlID="txtFechaNacimiento"/>
+                    </div>
+                 
         </div>
+
+
          <p><br /></p>
                 <div class="row">
                     <div class="col-4">
