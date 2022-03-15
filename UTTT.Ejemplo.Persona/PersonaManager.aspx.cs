@@ -129,6 +129,7 @@ namespace UTTT.Ejemplo.Persona
                 //    return;
                 //}
 
+                
                 // se obtiene la fecha de nacimiento
                 string date = Request.Form[this.txtFechaNacimiento.UniqueID];
                 DateTime fechaNacimiento = Convert.ToDateTime(date);

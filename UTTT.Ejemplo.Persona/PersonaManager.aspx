@@ -1,5 +1,6 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="PersonaManager.aspx.cs" Inherits="UTTT.Ejemplo.Persona.PersonaManager" Debug="false" %>
-<%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="ajaxToolkit"%>
+
+<%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="ajaxToolkit" %>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
@@ -73,24 +74,26 @@
 
                    <div class="container">
                 <div class="row">
-                    <asp:UpdatePanel ID="UpDatePanel1" runat="server">    
-                    <ContentTemplate>
                     <div class="col-2">Sexo:</div>
                     <div class="col-2">
+                        <asp:UpdatePanel ID="UpDatePanel1"  runat="server"> 
+                            <ContentTemplate> 
                         <asp:DropDownList
                             ID="ddlSexo" class="btn btn-outline-dark" runat="server"
                             Width="210px"
                             OnSelectedIndexChanged="ddlSexo_SelectedIndexChanged">
                         </asp:DropDownList>
-                          <asp:RequiredFieldValidator ID="rfvSexo" runat="server" ControlToValidate="ddlSexo" ErrorMessage="*Selecciona el sexo" InitialValue="-1" ValidationGroup="vgvVali"></asp:RequiredFieldValidator>
-                    </div>
-                    <div class="col-8"></div>
+                          
                         </ContentTemplate>
                         <Triggers>
                             <asp:AsyncPostBackTrigger ControlID="ddlSexo" EventName="SelectedIndexChanged" />
                         </Triggers>
                         </asp:UpdatePanel>  
-
+                        </div>
+                    <div class="col-12 col-xl-8">
+                        <asp:RequiredFieldValidator ID="rfvSexo" runat="server" ControlToValidate="ddlSexo" ErrorMessage="*Selecciona el sexo" InitialValue="-1" ValidationGroup="vgvVali"></asp:RequiredFieldValidator>
+             
+                        </div>
                          <div class="col-2">Clave Unica: </div>
                     <div class="col-2">
                         <asp:TextBox ID="txtClaveUnica" runat="server"
@@ -98,7 +101,7 @@
                             onkeypress="return validaNumeros(event);"  pattern=".{1,3}" >
                         </asp:TextBox>
                     </div>
-                    <div class="col-8">
+                    <div class="col-12 col-xl-8">
                         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                         <asp:RangeValidator
                             ID="rvClaveUnica" runat="server" ControlToValidate="txtClaveUnica" ErrorMessage="*La clave única deberá de estar entre 1 y 999"
@@ -152,7 +155,7 @@
                       onkeypress="return validaCurp(event);">
                       </asp:TextBox>
                     </div>
-                    <div class="col-8">
+                    <div class="col-12 col-xl-8">
                         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                         <asp:RegularExpressionValidator ID="revCURP" runat="server" ControlToValidate="txtCURP" ErrorMessage="*La CURP es incorrecta" ValidationExpression="^([A-Z][AEIOUX][A-Z]{2}\d{2}(?:0[1-9]|1[0-2])(?:0[1-9]|[12]\d|3[01])[HM](?:AS|B[CS]|C[CLMSH]|D[FG]|G[TR]|HG|JC|M[CNS]|N[ETL]|OC|PL|Q[TR]|S[PLR]|T[CSL]|VZ|YN|ZS)[B-DF-HJ-NP-TV-Z]{3}[A-Z\d])(\d)$"></asp:RegularExpressionValidator>
                         <asp:RequiredFieldValidator ID="rfvCurp" runat="server" ControlToValidate="txtCURP" ErrorMessage="*Curp obligatorio"></asp:RequiredFieldValidator>
@@ -160,16 +163,19 @@
 
                          <div class="col-2">Fecha de Nacimiento: </div>
                     <div class="col-2">
-                      <asp:TextBox ID="txtFechaNacimiento" runat="server" MaxLength="18" Width="160px"
+                      <asp:TextBox ID="txtFechaNacimiento" runat="server" MaxLength="18" Width="210px"
                       onkeypress="return validaCurp(event);">
                       </asp:TextBox>
-                         <asp:ImageButton ID="imgPopup" ImageUrl="Images/calendar.png" ImageAlign="Bottom"
-                        runat="server" CausesValidation="False" Width="25px" />
+                        </div>
+                        <div class="col-5 col-lg-3 col-xl-1">
+                            <center>
+                         <asp:ImageButton ID="imgPopup" ImageUrl="https://www.seekpng.com/png/detail/206-2062217_calendario-png.png" ImageAlign="Bottom"
+                        runat="server" CausesValidation="False" Width="30px" Height="30px" />
                     <ajaxToolkit:CalendarExtender ID="CalendarExtender1" PopupButtonID="imgPopup" Format="dd/MM/yyyy"
                         runat="server" TargetControlID="txtFechaNacimiento"/>
+                                </center>
                     </div>
-                 
-        </div>
+               </div>
 
 
          <p><br /></p>
