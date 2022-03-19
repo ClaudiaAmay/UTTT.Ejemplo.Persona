@@ -59,6 +59,7 @@
     </div>
     <section class="container-fluid">
                <form id="form1" runat="server">
+                 
                    <asp:ScriptManager ID="ScriptManager1" runat="server" EnablePageMethods="true">
             </asp:ScriptManager>
      
@@ -133,7 +134,7 @@
                     <div class="col-8">
                         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                         <asp:RegularExpressionValidator ID="revAPaterno" runat="server" ControlToValidate="txtAPaterno" ErrorMessage="*Incluir solamente letras y espacios" ValidationExpression="[a-zA-Z ]{2,254}"></asp:RegularExpressionValidator>
-                        <asp:RequiredFieldValidator ID="rfvAPaterno" runat="server" ControlToValidate="txtAPaterno" ErrorMessage="*Apellido Paterno obligatorio"></asp:RequiredFieldValidator>>
+                        <asp:RequiredFieldValidator ID="rfvAPaterno" runat="server" ControlToValidate="txtAPaterno" ErrorMessage="*Apellido Paterno obligatorio"></asp:RequiredFieldValidator>
                     </div>
 
                          <div class="col-2">A Materno: </div>
@@ -161,17 +162,17 @@
                         <asp:RequiredFieldValidator ID="rfvCurp" runat="server" ControlToValidate="txtCURP" ErrorMessage="*Curp obligatorio"></asp:RequiredFieldValidator>
                     </div>
 
-                         <div class="col-2">Fecha de Nacimiento: </div>
-                    <div class="col-2">
+                         <div class="col-2 ">Fecha de Nacimiento: </div>
+                    <div class="col-2 ">
                       <asp:TextBox ID="txtFechaNacimiento" runat="server" MaxLength="18" Width="210px"
                       onkeypress="return validaCurp(event);">
                       </asp:TextBox>
                         </div>
-                        <div class="col-5 col-lg-3 col-xl-1">
+                        <div class="col-8 col-lg-3 col-xl-1 ">
                             <center>
-                         <asp:ImageButton ID="imgPopup" ImageUrl="https://www.seekpng.com/png/detail/206-2062217_calendario-png.png" ImageAlign="Bottom"
+                         <asp:ImageButton ID="imgPopup" ImageUrl="https://img2.freepng.es/20181127/wkw/kisspng-computer-icons-calendar-date-clip-art-portable-net-annual-calendar-page-svg-png-icon-free-download-5bfdc582e1dc47.7282942115433578269251.jpg" ImageAlign="Bottom"
                         runat="server" CausesValidation="False" Width="30px" Height="30px" />
-                    <ajaxToolkit:CalendarExtender ID="CalendarExtender1" PopupButtonID="imgPopup" Format="dd/MM/yyyy"
+                    <ajaxToolkit:CalendarExtender ID="CalendarExtender1" PopupButtonID="imgPopup" Format="MM/dd/yyyy"
                         runat="server" TargetControlID="txtFechaNacimiento"/>
                                 </center>
                     </div>
@@ -179,16 +180,21 @@
 
 
          <p><br /></p>
-                <div class="row">
-                    <div class="col-4">
+                <div class="row col-6">
+                  
+                        
                         <center>
+                          
                             <asp:Button ID="btnAceptar" class="btn btn-outline-primary" runat="server" Text="Aceptar"
                             OnClick="btnAceptar_Click" ViewStateMode="Disabled"  CausesValidation="false"/>
+                              
 
                         <asp:Button ID="btnCancelar" class="btn btn-outline-info" runat="server" Text="Cancelar" CausesValidation="false"
                             OnClick="btnCancelar_Click" ViewStateMode="Disabled" />
+                                
+                                
                         </center>
-                    </div>
+                  
                     <div class="col-8">
                         <asp:Label ID="lblMensaje" runat="server" ForeColor="#CC0000" Text="..." Visible="False"></asp:Label>
                     </div>

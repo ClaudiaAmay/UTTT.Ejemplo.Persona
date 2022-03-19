@@ -30,7 +30,7 @@ namespace UTTT.Ejemplo.Linq.Data.Properties
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.ConnectionString)]
-        [global::System.Configuration.DefaultSettingValueAttribute("Data Source=SQL5109.site4now.net;Initial Catalog=db_a7f258_persona;User Id=db_a7f258_persona_admin;Password=15022001cahz.")]
+        [global::System.Configuration.DefaultSettingValueAttribute("Data Source=SQL5107.site4now.net;Initial Catalog=db_a8400b_persona;User Id=db_a8400b_persona_admin;Password=claudia15.A")]
         public string PersonaConnectionString
         {
             get

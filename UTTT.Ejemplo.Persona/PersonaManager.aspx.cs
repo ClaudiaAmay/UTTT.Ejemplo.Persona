@@ -129,10 +129,30 @@ namespace UTTT.Ejemplo.Persona
                 //    return;
                 //}
 
-                
+
                 // se obtiene la fecha de nacimiento
-                string date = Request.Form[this.txtFechaNacimiento.UniqueID];
-                DateTime fechaNacimiento = Convert.ToDateTime(date);
+                DateTime fechaNacimiento;
+
+                if (this.txtFechaNacimiento.ToString()=="")
+                {
+                    fechaNacimiento = DateTime.Parse("04/04/1600");
+                }
+                else
+                {
+                    try
+                    {
+
+                       string date = Request.Form[this.txtFechaNacimiento.UniqueID];
+                        fechaNacimiento = Convert.ToDateTime(date);
+                        
+                    }
+                    catch
+                    {
+                        fechaNacimiento = DateTime.Parse("05/05/1601");
+
+                    }
+                }
+              
 
                 DataContext dcGuardar = new DcGeneralDataContext();
                 UTTT.Ejemplo.Linq.Data.Entity.Persona persona = new Linq.Data.Entity.Persona();
@@ -361,6 +381,26 @@ namespace UTTT.Ejemplo.Persona
             if (_persona.strCurp.Length < 18)
             {
                 _mensaje = "Los caracteres permitidos para Curp tiene que ser 18";
+                return false;
+            }
+            if (_persona.dteFechaNacimiento.Value.Year.ToString() == "1601")
+            {
+                _mensaje = "El campo de fecha de nacimiento contiene un formato no Valido";
+                return false;
+            }
+            if (_persona.dteFechaNacimiento.Value.Year.ToString() == "1600")
+            {
+                _mensaje = "El campo de fecha de nacimiento no puede estar vacio";
+                return false;
+            }
+            if (_persona.dteFechaNacimiento.Value.Year == DateTime.Now.Year)
+            {
+                _mensaje = "El campo de fecha de nacimiento no puede ser del presente año";
+                return false;
+            }
+            if (int.Parse(_persona.dteFechaNacimiento.Value.Year.ToString()) <= 1753 || int.Parse(_persona.dteFechaNacimiento.Value.Year.ToString()) >= 9999)
+            {
+                _mensaje = "El campo de fecha de nacimiento no debe estar entre 1753 y 9999";
                 return false;
             }
             return true;
